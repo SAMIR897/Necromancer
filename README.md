@@ -6,6 +6,8 @@ Necromancer is an AI-delegated DAO governance plugin on Solana that lets users s
 
 *Built for the [Graveyard Hackathon](https://x.com/graveyard_hack) on Solana Devnet.*
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-purple?style=for-the-badge&logo=vercel)](https://necromancer-iebbud5e6-samir-kumars-projects-c8456f8d.vercel.app/)
+
 ---
 
 ![Necromancer Splash Screen](./frontend/assets_image_music/wmremove-transformed%281%29.png)
