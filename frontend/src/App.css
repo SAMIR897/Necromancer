@@ -1,0 +1,38 @@
+/* App.css */
+
+/* Deep overrides for the Solana Wallet Adapter Button to match the graveyard glassmorphic theme
+   Using #root increases CSS specificity so it overrides the library's injected stylesheets */
+
+#root .wallet-adapter-button,
+#root .wallet-adapter-button-trigger,
+#root .wallet-adapter-button:not([disabled]) {
+    background-color: rgba(14, 11, 24, 0.7) !important;
+    color: #e9d5ff !important;
+    font-weight: 600 !important;
+    border-radius: 0.5rem !important;
+    height: 2.25rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    font-size: 0.75rem !important;
+    border: 1px solid rgba(168, 85, 247, 0.2) !important;
+    transition: all 0.3s ease !important;
+    font-family: inherit !important;
+    backdrop-filter: blur(12px) !important;
+    background-image: none !important;
+}
+
+#root .wallet-adapter-button:hover,
+#root .wallet-adapter-button-trigger:hover,
+#root .wallet-adapter-button:not([disabled]):hover {
+    background-color: rgba(69, 26, 115, 0.6) !important;
+    border-color: rgba(168, 85, 247, 0.4) !important;
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.25) !important;
+    background-image: none !important;
+}
+
+/* Ensure the font icon or connected wallet address size scales correctly */
+#root .wallet-adapter-button-start-icon {
+    width: 1rem !important;
+    height: 1rem !important;
+    margin-right: 0.5rem !important;
+}
