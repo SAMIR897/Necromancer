@@ -1,0 +1,8 @@
+# Ignore frontend and offchain directories for GitHub language stats
+frontend/* linguist-vendored
+offchain/* linguist-vendored
+contracts/tests/* linguist-vendored
+
+# Ignore generated Anchor JS/TS files for stats
+*.ts linguist-vendored
+*.js linguist-vendored
