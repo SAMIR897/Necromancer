@@ -6,35 +6,61 @@ Necromancer is an AI-delegated DAO governance plugin on Solana that lets users s
 
 *Built for the [Graveyard Hackathon](https://x.com/graveyard_hack) on Solana Devnet.*
 
-![UI Preview](./frontend/src/imagesource/wmremove-transformed.png)
+---
+
+![Necromancer Splash Screen](./frontend/assets_image_music/wmremove-transformed(1).png)
+
+---
 
 ## 🏆 The Problem: The Governance Graveyard
-Most DAOs on Solana—including those managed by Realms—suffer from chronic "voter apathy." Proposals fail to reach quorum not because the ideas are bad, but because token holders don't have the time to read, evaluate, and manually sign transactions for every single proposal.
 
-Treasuries sit idle. Protocols stagnate. The DAO becomes a graveyard.
+Most DAOs on Solana — including those managed by Realms — suffer from chronic **voter apathy**. Proposals fail to reach quorum not because the ideas are bad, but because token holders don't have the time to read, evaluate, and manually sign every proposal.
+
+> Treasuries sit idle. Protocols stagnate. The DAO becomes a graveyard.
+
+---
 
 ## ⚡ The Solution: AI-Delegated Autonomy
+
 Necromancer introduces a fundamentally new primitive to Solana Governance: **AI Delegation**.
 
-Instead of voting manually or blindly delegating tokens to an overloaded human representative, users stake their governance tokens into a Necromancer Vault PDA and **train a personalized AI agent** with natural language.
+Instead of voting manually or blindly delegating to an overloaded human representative, users stake their governance tokens into a **Necromancer Vault PDA** and train a personalized AI agent with natural language instructions.
 
-### How it Works:
-1. **Stake to Vault:** Users deposit their Realms `$GOV` tokens into the Necromancer PDA.
-2. **Train the Agent:** Users write a natural language prompt defining their voting logic (e.g., *"Always vote to maximize treasury yield. Vote NO on token unlocks. Ignore marketing."*).
-3. **High-Frequency Autonomy:** An off-chain AI node listens to the Realms program for new proposals. It evaluates the proposal against the user's logic, reaches a decision, and automatically builds, signs, and submits the `cast_vote` transaction on their behalf.
+### How It Works
 
-### Protocol Benefits:
-- **Zero Voter Apathy:** Proposals immediately reach quorum as AI agents vote instantly upon proposal creation.
-- **Gasless for Users:** The off-chain relayer node pays the transaction fees; the user simply stakes and forgets.
-- **Granular Control:** Unlike traditional delegation where a human might vote against your interests, your AI agent follows your exact philosophical instructions 100% of the time.
+| Step | Action | Description |
+|------|--------|-------------|
+| 1️⃣ | **Stake to Vault** | Deposit `$GOV` tokens into the Necromancer PDA |
+| 2️⃣ | **Train the Agent** | Write natural language voting logic (e.g. *"Always vote to maximize treasury yield. Vote NO on token unlocks."*) |
+| 3️⃣ | **Full Autonomy** | The off-chain AI node listens for new proposals, evaluates them, and auto-submits `cast_vote` on your behalf |
+
+### Protocol Benefits
+
+- 🧠 **Zero Voter Apathy** — Proposals reach quorum the instant they're created
+- ⛽ **Gasless for Users** — The relayer node pays transaction fees; users just stake and forget
+- 🎯 **Granular Control** — Your AI follows *your exact* philosophical instructions, 100% of the time
+- ⚡ **Solana Native** — Sub-second finality, Realms-compatible, built on Anchor
+
+---
 
 ## 🏗 Architecture
 
-Necromancer bridges Solana's high-throughput execution with off-chain LLM inference:
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Necromancer Stack                       │
+├──────────────────┬──────────────────┬───────────────────────┤
+│  Frontend        │  On-Chain Vault  │  Off-Chain Relayer    │
+│  React + Vite    │  Anchor / Solana │  Node.js + OpenAI     │
+│  Tailwind CSS    │  PDA Governance  │  @solana/web3.js      │
+│  Framer Motion   │  Realms Plugin   │  Auto cast_vote       │
+└──────────────────┴──────────────────┴───────────────────────┘
+```
 
-1. **Frontend (`/frontend`)**: A React + Vite + Tailwind interface. It provides a stunning, graveyard-themed dashboard where users connect their Phantom wallet, stake tokens, and deploy their AI configuration.
-2. **On-Chain Vault (Anchor)**: A Solana program holding the deposited governance tokens via PDAs. It grants Voting Authority to the off-chain agent's keypair while retaining Withdrawal Authority solely for the original human depositor.
-3. **Off-Chain Relayer (`/agent`)**: A Node.js listener utilizing `@solana/web3.js` to monitor the Realms contract. It intercepts new proposals, queries OpenAI to evaluate the text against the Vault's instructions, and fires a signed transaction back to the chain.
+1. **Frontend (`/frontend`)** — Graveyard-themed React dashboard. Users connect Phantom, stake tokens, and configure their AI agent's voting logic.
+2. **On-Chain Vault (`/contracts`)** — Anchor program that holds deposited governance tokens via PDAs. Grants Voting Authority to the off-chain agent while keeping Withdrawal Authority solely with the depositor.
+3. **Off-Chain Relayer (`/offchain`)** — Node.js listener that monitors the Realms contract. On each new proposal, it queries the OpenAI API with the user's vault instructions, receives a YES/NO decision, and fires a signed transaction back to the chain.
+
+---
 
 ## 🚀 Running Locally
 
@@ -42,28 +68,69 @@ Necromancer bridges Solana's high-throughput execution with off-chain LLM infere
 - Node.js & npm
 - Solana Toolchain (`solana-cli`)
 - Anchor Framework
-- A Phantom Wallet extension
+- Phantom Wallet browser extension
 
 ### Start the Frontend
-The frontend features a fully responsive, custom-themed UI.
 
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
 Navigate to `http://localhost:5175` to view the dashboard.
 
 ### On-Chain Deployment (Devnet)
-*Ensure your Solana CLI is configured to `devnet`.*
 
 ```bash
-# Build the Anchor program
-anchor build
+# Ensure Solana CLI targets devnet
+solana config set --url devnet
 
-# Deploy to Devnet
+# Build and deploy the Anchor program
+anchor build
 anchor deploy
 ```
 
+### Run the Off-Chain Agent
+
+```bash
+cd offchain
+npm install
+# Set your OPENAI_API_KEY and VAULT_KEYPAIR in .env
+node index.js
+```
+
+---
+
+## 📁 Project Structure
+
+```
+Necromancer/
+├── frontend/          # React + Vite dApp UI
+│   ├── src/
+│   │   ├── App.tsx        # Main application
+│   │   ├── components/    # StakePanel, AgentConfig, AgentTerminal
+│   │   └── imagesource/   # Background assets
+│   └── assets_image_music/ # Logo assets & background music
+├── contracts/         # Anchor smart contracts (Solana)
+├── offchain/          # Node.js AI voting agent
+└── README.md
+```
+
+---
+
 ## 📜 Hackathon Track
-Targeting the **Realms Governance Builders Track**. We believe automated, intent-based voting via AI delegation is the immediate future of decentralized coordination on Solana.
+
+Targeting the **Realms Governance Builders Track** at the Graveyard Hackathon.
+
+We believe automated, intent-based voting via AI delegation is the **immediate future of decentralized coordination** on Solana. Necromancer is the proof of concept.
+
+---
+
+<div align="center">
+
+**Built with 💜 and a little dark magic 🪄**
+
+*Solana · Anchor · OpenAI · Realms*
+
+</div>
