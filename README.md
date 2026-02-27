@@ -8,7 +8,7 @@ Necromancer is an AI-delegated DAO governance plugin on Solana that lets users s
 
 ---
 
-![Necromancer Splash Screen](./frontend/assets_image_music/wmremove-transformed(1).png)
+![Necromancer Splash Screen](./frontend/assets_image_music/wmremove-transformed%281%29.png)
 
 ---
 
@@ -62,15 +62,25 @@ Instead of voting manually or blindly delegating to an overloaded human represen
 
 ---
 
-## 🚀 Running Locally
+## 🚀 Deployment
 
-### Prerequisites
+### ▲ Vercel (Recommended — for everyone)
+
+Connect your GitHub repo to [vercel.com](https://vercel.com), set **Root Directory** to `frontend/`, and click Deploy. Vercel auto-detects Vite and gives you a public URL anyone can visit — no local setup needed.
+
+---
+
+### 💻 Local Development
+
+> **Note:** This section is for **contributors only**. Regular users should visit the live Vercel URL instead.
+
+**Prerequisites**
 - Node.js & npm
 - Solana Toolchain (`solana-cli`)
 - Anchor Framework
 - Phantom Wallet browser extension
 
-### Start the Frontend
+**Start the Frontend**
 
 ```bash
 cd frontend
@@ -78,25 +88,22 @@ npm install
 npm run dev
 ```
 
-Navigate to `http://localhost:5175` to view the dashboard.
+Opens at `http://localhost:5175` on your own machine only.
 
-### On-Chain Deployment (Devnet)
+**On-Chain Deployment (Devnet)**
 
 ```bash
-# Ensure Solana CLI targets devnet
 solana config set --url devnet
-
-# Build and deploy the Anchor program
 anchor build
 anchor deploy
 ```
 
-### Run the Off-Chain Agent
+**Run the Off-Chain Agent**
 
 ```bash
 cd offchain
 npm install
-# Set your OPENAI_API_KEY and VAULT_KEYPAIR in .env
+# Set OPENAI_API_KEY and VAULT_KEYPAIR in .env
 node index.js
 ```
 
